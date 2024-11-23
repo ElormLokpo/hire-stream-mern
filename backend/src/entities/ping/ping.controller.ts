@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { routes } from "../../constants";
 import { IController } from "../../interfaces/icontroller.interface";
 
 export class PingController implements IController {
-  public path = routes.PING;
+  public path = "/api/ping";
   public router = Router();
 
   constructor() {
