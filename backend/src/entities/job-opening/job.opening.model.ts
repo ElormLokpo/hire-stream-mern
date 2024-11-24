@@ -45,7 +45,7 @@ const ApplicantFormRequirements = new Schema(
 export const JobOpeningSchema = new Schema({
   _id: String,
   organization: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "OrganizationModel",
   },
   jop_requirements: JobRequirementSchema,
@@ -54,6 +54,10 @@ export const JobOpeningSchema = new Schema({
     acceptance_email: String,
     rejection_email: String,
   },
+  deadline: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 JobOpeningSchema.pre("save", async function () {
