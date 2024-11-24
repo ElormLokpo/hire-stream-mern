@@ -15,12 +15,14 @@ export const ApplicantSchema = new Schema({
     },
     certifications:[String],
     physical_disabilities:{type:String, enum: Object.values(DisabilityEnum)},
-    organization:{
+    job_opening:{
         type:String, 
-        ref: "OrganizationModel"
+        ref: "JobOpeningModel"
     }
 })
 
 ApplicantSchema.pre("save", async function(){
     this._id = await v4();
 })
+
+export const ApplicantModel = model("ApplicantModel", ApplicantSchema)

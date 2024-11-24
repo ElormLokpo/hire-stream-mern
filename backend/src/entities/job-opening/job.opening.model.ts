@@ -60,6 +60,12 @@ export const JobOpeningSchema = new Schema({
   }
 });
 
+JobOpeningSchema.virtual("applicants", {
+  ref:"ApplicantModel",
+  localField: "_id",
+  foreignField:"job_opening"
+})
+
 JobOpeningSchema.pre("save", async function () {
   this._id = await v4();
 });

@@ -22,13 +22,6 @@ OrganizationSchema.virtual("job_openings", {
   foreignField: "organization",
 });
 
-OrganizationSchema.virtual("applicants", {
-  ref:"ApplicantModel",
-  localField:"_id",
-  foreignField:"organization",
-
-})
-
 OrganizationSchema.set("toJSON", { virtuals: true });
 OrganizationSchema.set("toObject", { virtuals: true });
 
