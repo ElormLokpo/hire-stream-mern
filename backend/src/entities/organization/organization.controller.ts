@@ -27,10 +27,7 @@ export class OrganizationController implements IController {
                 path: "job_openings",
                 select: "job_requirements.job_title"
             })
-            .populate({
-                path: "applicants",
-                select: "_id fullname"
-            })
+          
 
         let response: IResponse = { success: true, message: "Organization query successful", data: org_query };
         res.status(200).json(response);
