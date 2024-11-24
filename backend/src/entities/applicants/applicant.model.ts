@@ -1,7 +1,9 @@
 import {Schema, model} from "mongoose";
 import { DisabilityEnum, EducationLevelEnum } from "./applicant.types";
+import { v4 } from "uuid";
 
 export const ApplicantSchema = new Schema({
+    _id:String,
     fullname:String, 
     email:{type:String, required:true},
     phone:String, 
@@ -12,6 +14,13 @@ export const ApplicantSchema = new Schema({
         soft_skills:[String]
     },
     certifications:[String],
-    physical_disabilities:{type:String, enum: Object.values(DisabilityEnum)}
+    physical_disabilities:{type:String, enum: Object.values(DisabilityEnum)},
+    organization:{
+        type:String, 
+        ref: "OrganizationModel"
+    }
+})
 
+ApplicantSchema.pre("save", async function(){
+    this._id = await v4();
 })
