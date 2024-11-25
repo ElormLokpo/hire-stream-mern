@@ -29,14 +29,14 @@ export class JobOpeninngController implements IController {
 
         let response: IResponse = { success: true, message: "Job opening query successful", data: job_query };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async GetJobOpening(req: Request, res: Response, next: NextFunction) {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let job_query = await JobOpeningModel.findById(req.params.id)
@@ -52,12 +52,12 @@ export class JobOpeninngController implements IController {
         if (!job_query) {
             let response: IResponse = { success: false, message: "Job opening not found.", data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let response: IResponse = { success: true, message: "Job opening query successful", data: job_query };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async CreateJobOpening(req: Request<{}, {}, IJobOpeningRequest>, res: Response, next: NextFunction) {
@@ -66,58 +66,58 @@ export class JobOpeninngController implements IController {
         if (!job_title) {
             let response: IResponse = { success: false, message: "Job title is required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         }
 
-       
+
 
         let job_mutation = await JobOpeningModel.create(req.body);
 
         let response: IResponse = { success: true, message: "Job opening creation successful", data: job_mutation };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async UpdateJobOpening(req: Request, res: Response, next: NextFunction) {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let job_check = await JobOpeningModel.findById(req.params.id);
         if (!job_check) {
             let response: IResponse = { success: false, message: `Job opening not found.`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let job_mutation = await JobOpeningModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
         let response: IResponse = { success: true, message: "Job opening update successful", data: job_mutation };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async DeleteJobOpening(req: Request, res: Response, next: NextFunction) {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let job_check = await JobOpeningModel.findById(req.params.id);
         if (!job_check) {
             let response: IResponse = { success: false, message: `Job opening not found.`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let job_mutation = await JobOpeningModel.findByIdAndDelete(req.params.id);
 
         let response: IResponse = { success: true, message: "Job opening delete successful", data: job_mutation };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
 }
