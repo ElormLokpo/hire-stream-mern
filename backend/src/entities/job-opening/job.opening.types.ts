@@ -23,6 +23,7 @@ export interface IJobOpeningRequest{
             job_country:string, 
             job_city:string
         },
+        salary_currency:string,
         salary_range: string, 
         qualifications: string[],
         responsibilities:string[],
@@ -58,6 +59,7 @@ export interface IJobOpening{
             job_country:string, 
             job_city:string
         },
+        salary_currency:string,
         salary_range: string, 
         qualifications: string[],
         responsibilities:string[],

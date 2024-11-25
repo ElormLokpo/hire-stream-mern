@@ -13,6 +13,7 @@ const JobRequirementSchema = new Schema(
       },
       required: true,
     },
+    salary_currency: String,
     salary_range: { type: String },
     qualifications: { type: [String] },
     responsibilities: { type: [String] },
@@ -65,6 +66,9 @@ JobOpeningSchema.virtual("applicants", {
   localField: "_id",
   foreignField:"job_opening"
 })
+
+JobOpeningSchema.set("toJSON",{virtuals:true})
+JobOpeningSchema.set("toObject", {virtuals:true})
 
 JobOpeningSchema.pre("save", async function () {
   this._id = await v4();
