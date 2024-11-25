@@ -27,18 +27,18 @@ export class OrganizationController implements IController {
                 path: "job_openings",
                 select: "_id job_requirements.job_title"
             })
-          
+
 
         let response: IResponse = { success: true, message: "Organization query successful", data: org_query };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async GetOrganization(req: Request, res: Response, next: NextFunction) {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let org_query = await OrganizationModel.findById(req.params.id)
@@ -54,12 +54,12 @@ export class OrganizationController implements IController {
         if (!org_query) {
             let response: IResponse = { success: false, message: "Organization not found.", data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let response: IResponse = { success: true, message: "Organization query successful", data: org_query };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async CreateOrganization(req: Request<{}, {}, IOrganizationRequest>, res: Response, next: NextFunction) {
@@ -68,63 +68,63 @@ export class OrganizationController implements IController {
         if (!organization_name) {
             let response: IResponse = { success: false, message: "Organization name is required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         }
 
-        let org_check = await OrganizationModel.findOne({organization_name});
-        if (org_check){
+        let org_check = await OrganizationModel.findOne({ organization_name });
+        if (org_check) {
             let response: IResponse = { success: false, message: `Organization with name:${organization_name} already exists.`, data: {} }
             res.status(409).json(response);
-            return next();
+            next();
         }
 
         let org_mutation = await OrganizationModel.create(req.body);
 
         let response: IResponse = { success: true, message: "Organization creation successful", data: org_mutation };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async UpdateOrganization(req: Request, res: Response, next: NextFunction) {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let org_check = await OrganizationModel.findById(req.params.id);
-        if (!org_check){
+        if (!org_check) {
             let response: IResponse = { success: false, message: `Organization not found.`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
-        let org_mutation = await OrganizationModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
+        let org_mutation = await OrganizationModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
         let response: IResponse = { success: true, message: "Organization update successful", data: org_mutation };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
     public async DeleteOrganization(req: Request, res: Response, next: NextFunction) {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let org_check = await OrganizationModel.findById(req.params.id);
-        if (!org_check){
+        if (!org_check) {
             let response: IResponse = { success: false, message: `Organization not found.`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let org_mutation = await OrganizationModel.findByIdAndDelete(req.params.id);
 
         let response: IResponse = { success: true, message: "Organization delete successful", data: org_mutation };
         res.status(200).json(response);
-        return next();
+        next();
     }
 
 

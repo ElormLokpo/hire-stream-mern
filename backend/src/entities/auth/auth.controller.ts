@@ -27,14 +27,14 @@ export class AuthController implements IController {
         if (!fullname || !email || !password) {
             let response: IResponse = { success: false, message: "Fullname, email and password are required", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let userByEmail = await AuthModel.findOne({ email });
         if (userByEmail) {
             let response: IResponse = { success: false, message: `User with email:${email} already exists`, data: {} }
             res.status(409).json(response);
-            return next();
+            next();
         }
 
         req.body.password = await HashPassword(password);
@@ -51,7 +51,7 @@ export class AuthController implements IController {
             }
         }
         res.status(201).json(response);
-        return next();
+        next();
 
     }
 
@@ -61,14 +61,14 @@ export class AuthController implements IController {
         if (!email || !password) {
             let response: IResponse = { success: false, message: "Email and password are required", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let userByEmail = await AuthModel.findOne({ email }).select("+password");
         if (!userByEmail) {
             let response: IResponse = { success: false, message: `User with email:${email} does not exist`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let password_valid = await ComparePassword(userByEmail.password, password);
@@ -76,7 +76,7 @@ export class AuthController implements IController {
         if (!password_valid) {
             let response: IResponse = { success: false, message: `Incorrect password`, data: {} }
             res.status(401).json(response);
-            return next();
+            next();
         }
 
         let tokens = await GenerateTokens({ id: userByEmail._id });
@@ -90,7 +90,7 @@ export class AuthController implements IController {
             }
         }
         res.status(200).json(response);
-        return next();
+        next();
 
     }
 
@@ -100,7 +100,7 @@ export class AuthController implements IController {
         if (!refresh_token) {
             let response: IResponse = { success: false, message: "Refresh token is required", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let token_content = await VerifyRefreshToken(refresh_token)
@@ -108,7 +108,7 @@ export class AuthController implements IController {
 
         let response: IResponse = { success: true, message: `Tokens generated successfully`, data: { new_tokens } }
         res.status(201).json(response);
-        return next();
+        next();
 
     }
 
@@ -117,7 +117,7 @@ export class AuthController implements IController {
 
         let response: IResponse = { success: true, message: `User query successful`, data: userQuery }
         res.status(201).json(response);
-        return next();
+        next();
 
     }
 
@@ -126,14 +126,14 @@ export class AuthController implements IController {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let userQuery = await AuthModel.findById(req.params.id);
 
         let response: IResponse = { success: true, message: `User query successful`, data: userQuery }
         res.status(201).json(response);
-        return next();
+        next();
 
     }
 
@@ -141,20 +141,20 @@ export class AuthController implements IController {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let userQuery = await AuthModel.findById(req.params.id);
         if (!userQuery) {
             let response: IResponse = { success: false, message: `User does not exist`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let userMutation = await AuthModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
         let response: IResponse = { success: true, message: `User update successful`, data: userMutation }
         res.status(201).json(response);
-        return next();
+        next();
 
     }
 
@@ -162,20 +162,20 @@ export class AuthController implements IController {
         if (!req.params.id) {
             let response: IResponse = { success: false, message: "Id required.", data: {} }
             res.status(400).json(response);
-            return next();
+            next();
         };
 
         let userQuery = await AuthModel.findById(req.params.id);
         if (!userQuery) {
             let response: IResponse = { success: false, message: `User does not exist`, data: {} }
             res.status(404).json(response);
-            return next();
+            next();
         }
 
         let userMutation = await AuthModel.findByIdAndDelete(req.params.id);
         let response: IResponse = { success: true, message: `User deleted successfully`, data: userMutation }
         res.status(201).json(response);
-        return next();
+        next();
 
     }
 

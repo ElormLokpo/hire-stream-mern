@@ -17,7 +17,8 @@ export const ApplicantSchema = new Schema({
     physical_disabilities: { type: String, enum: Object.values(DisabilityEnum) },
     job_opening: {
         type: String,
-        ref: "JobOpeningModel"
+        ref: "JobOpeningModel",
+        required:true
     }
 })
 
