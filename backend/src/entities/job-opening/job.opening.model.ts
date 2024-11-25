@@ -48,7 +48,7 @@ export const JobOpeningSchema = new Schema({
     type: String,
     ref: "OrganizationModel",
   },
-  jop_requirements: JobRequirementSchema,
+  job_requirements: JobRequirementSchema,
   applicantform_requirements: ApplicantFormRequirements,
   email_template: {
     acceptance_email: String,

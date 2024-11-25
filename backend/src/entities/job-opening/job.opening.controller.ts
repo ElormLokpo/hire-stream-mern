@@ -9,7 +9,11 @@ export class JobOpeninngController implements IController {
     public router: Router = Router();
 
     constructor() {
-
+        this.router.get(`${this.path}/all`, this.GetAllJobOpenings)
+        this.router.get(`${this.path}/:id`, this.GetJobOpening)
+        this.router.post(`${this.path}/add`, this.CreateJobOpening)
+        this.router.patch(`${this.path}/update/:id`, this.UpdateJobOpening)
+        this.router.delete(`${this.path}/delete/:id`, this.DeleteJobOpening)
     }
 
     public async GetAllJobOpenings(_req: Request, res: Response, next: NextFunction) {
@@ -42,7 +46,7 @@ export class JobOpeninngController implements IController {
             })
             .populate({
                 path: "job_openings",
-                select: "job_requirements.job_title"
+                select: "_id fullname"
             })
 
         if (!job_query) {

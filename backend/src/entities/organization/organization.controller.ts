@@ -25,7 +25,7 @@ export class OrganizationController implements IController {
             })
             .populate({
                 path: "job_openings",
-                select: "job_requirements.job_title"
+                select: "_id job_requirements.job_title"
             })
           
 
@@ -48,7 +48,7 @@ export class OrganizationController implements IController {
             })
             .populate({
                 path: "job_openings",
-                select: "job_requirements.job_title"
+                select: "_id job_requirements.job_title"
             })
 
         if (!org_query) {

@@ -25,4 +25,33 @@ export enum EducationLevelEnum {
     OTHER = "Other",
   }
   
-  
+  export interface IApplicantRequest{
+    fullname:string, 
+    email:string, 
+    phone:string, 
+    dob:string, 
+    highest_education_level:string, 
+    skils:{
+      technical_skills:string[], 
+      soft_skills:string[]
+    },
+    certifications: string[],
+    physical_disabilities: string,
+    job_opening:string
+  }
+
+  export interface IApplicant{
+    _id:string, 
+    fullname:string, 
+    email:string, 
+    phone:string, 
+    dob:string, 
+    highest_education_level:string, 
+    skils:{
+      technical_skills:string[], 
+      soft_skills:string[]
+    },
+    certifications: string[],
+    physical_disabilities: string,
+    job_opening:string
+  }
