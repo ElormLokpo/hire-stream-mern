@@ -1,9 +1,10 @@
-
+import {RouterProvider} from "react-router-dom";
+import { Router } from "../routes";
 
 export const RootProvider = ()=>{
     return(
-        <div>
-            Root
-        </div>
+       <>
+            <RouterProvider router={Router}/>
+       </>
     )
 }
