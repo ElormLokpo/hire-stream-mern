@@ -35,23 +35,25 @@ export class AuthController implements IController {
             let response: IResponse = { success: false, message: `User with email:${email} already exists`, data: {} }
             res.status(409).json(response);
             next();
-        }
+        } else {
+            req.body.password = await HashPassword(password);
+            let createdUser = await AuthModel.create(req.body);
 
-        req.body.password = await HashPassword(password);
-        let createdUser = await AuthModel.create(req.body);
-
-        let tokens = await GenerateTokens({ id: createdUser._id });
-        let response: IResponse = {
-            success: true, message: `User account created successfully`, data: {
-                userid: createdUser._id,
-                fullname: createdUser.fullname,
-                email: createdUser.email,
-                role: createdUser.role,
-                tokens
+            let tokens = await GenerateTokens({ id: createdUser._id });
+            let response: IResponse = {
+                success: true, message: `User account created successfully`, data: {
+                    userid: createdUser._id,
+                    fullname: createdUser.fullname,
+                    email: createdUser.email,
+                    role: createdUser.role,
+                    tokens
+                }
             }
+            res.status(201).json(response);
+            next();
         }
-        res.status(201).json(response);
-        next();
+
+
 
     }
 
@@ -62,35 +64,41 @@ export class AuthController implements IController {
             let response: IResponse = { success: false, message: "Email and password are required", data: {} }
             res.status(400).json(response);
             next();
-        };
+        } else {
+            let userByEmail = await AuthModel.findOne({ email }).select("+password");
+            if (!userByEmail) {
+                let response: IResponse = { success: false, message: `User with email:${email} does not exist`, data: {} }
+                res.status(404).json(response);
+                next();
+            } else {
+                let password_valid = await ComparePassword(userByEmail.password, password);
 
-        let userByEmail = await AuthModel.findOne({ email }).select("+password");
-        if (!userByEmail) {
-            let response: IResponse = { success: false, message: `User with email:${email} does not exist`, data: {} }
-            res.status(404).json(response);
-            next();
-        }
+                if (!password_valid) {
+                    let response: IResponse = { success: false, message: `Incorrect password`, data: {} }
+                    res.status(401).json(response);
+                    next();
+                }else{
+                    let tokens = await GenerateTokens({ id: userByEmail._id });
+                    let response: IResponse = {
+                        success: true, message: `User login successful`, data: {
+                            userid: userByEmail._id,
+                            fullname: userByEmail.fullname,
+                            email: userByEmail.email,
+                            role: userByEmail.role,
+                            tokens
+                        }
+                    }
+                    res.status(200).json(response);
+                    next();
+                }
 
-        let password_valid = await ComparePassword(userByEmail.password, password);
-
-        if (!password_valid) {
-            let response: IResponse = { success: false, message: `Incorrect password`, data: {} }
-            res.status(401).json(response);
-            next();
-        }
-
-        let tokens = await GenerateTokens({ id: userByEmail._id });
-        let response: IResponse = {
-            success: true, message: `User login successful`, data: {
-                userid: userByEmail._id,
-                fullname: userByEmail.fullname,
-                email: userByEmail.email,
-                role: userByEmail.role,
-                tokens
+              
             }
+
+
         }
-        res.status(200).json(response);
-        next();
+
+
 
     }
 

@@ -15,6 +15,7 @@ export const AuthSchema = new Schema({
   role: {
     type: String,
     enum: Object.values(RoleEnum),
+    default:RoleEnum.RECRUITER
   },
   password: {
     type: String,
