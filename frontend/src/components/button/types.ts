@@ -6,5 +6,6 @@ export interface IButton {
     submitHanlder: () => void,
     isLoading?:boolean, 
     loadingText?:string,
-    style_type?:string
+    style_type?:string,
+    disabled?:boolean,
 }

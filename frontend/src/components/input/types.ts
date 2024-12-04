@@ -6,6 +6,8 @@ export interface IInput{
     label?:string
     showLabel?:boolean, 
     name:string,
-    type?:string
+    type?:string,
+    disabled?:boolean,
+    isError?:boolean
 
 }
