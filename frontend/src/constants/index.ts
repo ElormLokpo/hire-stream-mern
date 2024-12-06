@@ -6,8 +6,8 @@ export const serviceEndpoints = {
 
 }
 
-export const recruiterRoutes = {
-    AUTH_REGISTER:`/recruiter/auth/register`,
-    AUTH_LOGIN: '/auth/login'
-   
+export const genericRoutes = {
+    AUTH_REGISTER:`/auth/register`,
+    AUTH_LOGIN: '/auth/login',
+    DASHBOARD: '/dashboard'
 }
